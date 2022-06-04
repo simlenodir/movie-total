@@ -29,21 +29,37 @@
             <button class="btn btn-primary ms-2">Filter</button>
         </form>
         <h2 class="movies__title text-center my-5">THE BEST MOVIES</h2>
+        <p>
+            <a class="btn-danger bookmark-box" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Bookmarks
+            </a>
+          </p>
+          <div class="collapse bookmark-text" id="collapseExample">
+            <div class="card card-body">
+             
+            </div>
+          </div>
         <div class="wrapp d-flex justify-content-around flex-wrap"></div>
-            <template id="template">
-                <div class="card" style="width: 16rem;">
-                 <a href="" class="movie-link"> <img  src="" class="card-img-top" alt="..."style="height: 200px;"></a> 
-                    <div class="card-body text-center">
-                        <h5 class="card-title border"></h5>
-                        <p class="card-text"></p>
-                        <p class="year"></p>
-                        <p class="reyting"></p>
-                        <a href="#" class="btn btn-primary">watch more</a>
-                    </div>
-                </div>
-            </template>
 
-        
+        <template id="template">
+            <div class="card my-2" style="width: 16rem;height: 540px; ">
+                <a href="" class="movie-link"> <img src="" class="card-img-top" alt="..."
+                        style="height: 200px;"></a>
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
+                    <p class="year"></p>
+                    <div class="d-flex mx-5 justify-content-center">
+                        <p class="reyting mx-2"></p>
+                        <img src="./images/star.png" class="star" alt="" height="20" width="30">
+                    </div>
+                    <a href="#" class="btn btn-primary pb-2">watch more</a>
+                </div>
+                <button type="button" class="btn btn-danger liked">Bookmark</button>
+            </div>
+        </template>
+
+
 
         <ul class="pagination d-flex justify-content-center my-5">
             <li class="page-item"><button class="page-link previous" href="#">Previous</button></li>
@@ -51,7 +67,7 @@
             <!-- <li class="page-item"><button class="page-link" href="#">2</button></li>
             <li class="page-item"><button class="page-link" href="#">3</button></li> -->
             <li class="page-item"><button class="page-link next" href="#">Next</button></li>
-          </ul>
+        </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./js/movies.js"></script>

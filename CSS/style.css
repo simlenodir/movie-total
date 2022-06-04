@@ -18,7 +18,7 @@ body {
 
 
 p {
-    height: 20px;
+    height: 30px;
     overflow: scroll;
 }
 
@@ -32,4 +32,27 @@ h5 {
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+.card-title{
+    height: 50px;
+    color: rgb(107, 87, 87);
+}
+
+.year {
+    font-size: larger;
+}
+
+.bookmark-box{
+    font-size: 25px !important;
+    padding: 30px ;
+    background: rgb(165, 69, 69);
+    color: aliceblue;
+    text-decoration: none;
+    border-radius: 20px  !important;
+    /* padding: 50px !important; */
+     
+}
+.bookmark:active {
+    color: aquamarine;
 }

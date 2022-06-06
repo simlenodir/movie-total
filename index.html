@@ -30,13 +30,13 @@
         </form>
         <h2 class="movies__title text-center my-5">THE BEST MOVIES</h2>
         <p>
-            <a class="btn-danger bookmark-box" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-              Bookmarks
+            <a class="btn btn-warning bookmark-box my-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            My  Bookmarks
             </a>
           </p>
           <div class="collapse bookmark-text" id="collapseExample">
             <div class="card card-body">
-             
+            <ul class="bookmark_list list-unstyled mx-1"> </ul>
             </div>
           </div>
         <div class="wrapp d-flex justify-content-around flex-wrap"></div>
@@ -53,12 +53,18 @@
                         <p class="reyting mx-2"></p>
                         <img src="./images/star.png" class="star" alt="" height="20" width="30">
                     </div>
-                    <a href="#" class="btn btn-primary pb-2">watch more</a>
+                    <button  class="btn btn-primary pb-2">watch more</button>
                 </div>
-                <button type="button" class="btn btn-danger liked">Bookmark</button>
+                <button type="button" class="btn btn-warning liked">Bookmark</button>
             </div>
         </template>
 
+        <template id="bookmark-template">
+            <li class="bookmark_item d-flex justify-content-between align-items-center border">
+                <h3 class="bookmark__title">Movie</h3>
+                <button class="btn btn-danger ">Remove</button>
+            </li>
+        </template>
 
 
         <ul class="pagination d-flex justify-content-center my-5">

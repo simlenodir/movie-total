@@ -4,15 +4,18 @@ let elementSearch = document.querySelector(".search-input");
 let elCardWrapper = findElement(".wrapp");
 let elCategorySelect = document.querySelector(".category-select");
 const elCardTemplate = document.getElementById("template").content;
+const elBookmarkTemplate = document.getElementById('bookmark-template').content
 let elementImg = document.querySelector(".movie-link");
-let sort = document.querySelector(".sort-select");
 let regex = new RegExp();
 let elPreviusbtn = document.querySelector(".previous");
 let elNextbtn = document.querySelector(".next");
 let elPageCount = document.querySelector(".page-count");
+let elBookmarklist = document.querySelector('.bookmark_list')
+
 let limit = 8;
 let page = 1;
 let maxPage = Math.ceil(KINOLAR.length / limit);
+let bookmark = localStorage.getItem('bookmark') ? JSON.parse(localStorage.getItem('bookmark')) : []
 
 
 const sortFunction = {
@@ -85,6 +88,8 @@ let renderCategories = () => {
 renderCategories();
 getMovieGenres(KINOLAR);
 
+let elementsWrapper = document.createDocumentFragment()
+
 let renderMovies = (arr) => {
   elCardWrapper.innerHTML = null;
   arr.forEach((movie) => {
@@ -106,25 +111,13 @@ let renderMovies = (arr) => {
     texMvie.textContent = movie.summary;
     year.textContent ='year : ' +  movie.year ; 
     routine.textContent = movie.imdbRating;
-    elBookmarkbtn.id = movie.imdbId
-    elCardWrapper.append(templateClone);
-
-
-    let handleBookMark = () =>{
-      let elBookMarkbox = document.querySelector('.bookmark-box');
-      let elBookmarkText = document.querySelector('.bookmark-text');
-      let bookMarkTitles = []
-        let result = elBookmarkText.textContent =  movie.title 
-        bookMarkTitles.unshift(result)
-      console.log( elBookmarkText);
-      console.log(bookMarkTitles);
-    }
+    elBookmarkbtn.dataset.id = movie.imdbId
+    elementsWrapper.append(templateClone);
    
+    elCardWrapper.appendChild(elementsWrapper)
 
   });
 };
-// let elBookmarkbtn =templateClone.querySelector('.liked')
-// console.log(elBookmarkbtn);
 
 let handleSearch = (evt) => {
   evt.preventDefault();
@@ -175,10 +168,41 @@ let handlePrevpage = () => {
 
   elNextbtn.disabled = false;
 };
-// let elBookmarkbtn = templateClone.querySelector('.liked')
 
-elementForm.addEventListener("submit", handleSearch);
+let elBookmarkWrapper = document.createDocumentFragment()
+
+console.log(elBookmarkWrapper);
+
+let renderBookmarks = (arr) =>{
+  arr.forEach(bookmark =>{
+   let bookmarkClone = elBookmarkTemplate.cloneNode(true)
+   let title = bookmarkClone.querySelector('.bookmark__title')
+   title.textContent = bookmark.title
+    console.log(bookmarkClone, bookmark);
+    elBookmarkWrapper.appendChild(bookmarkClone)
+  })
+  elBookmarklist.innerHTML = null
+  elBookmarklist.append(elBookmarkWrapper)
+}
+
+let handleListEvent =(evt) => {
+  if(evt.target.matches('.liked')){
+    let foundMovie = KINOLAR.find((movie) => movie.imdbId===evt.target.dataset.id)
+    let bookmarkMovie = bookmark.find(bookMark=> bookMark.imdbId ===evt.target.dataset.id)
+    if (!bookmarkMovie){
+      bookmark.push(foundMovie)
+    }
+    console.log(bookmarkMovie);
+
+ 
+    localStorage.setItem('bookmark', JSON.stringify(bookmark))
+    renderBookmarks(bookmark)
+  }
+}
+renderBookmarks(bookmark)
 renderMovies(KINOLAR.slice(0, 8));
+elCardWrapper.addEventListener('click', handleListEvent )
+elementForm.addEventListener("submit", handleSearch);
 elNextbtn.addEventListener("click", handleNextpage);
 elPreviusbtn.addEventListener("click", handlePrevpage);
 // elBookmarkbtn.addEventListener('click',handleBookMark)

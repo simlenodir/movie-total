@@ -3,6 +3,7 @@ let KINOLAR = movies.slice(0, 64);
 let elementSearch = document.querySelector(".search-input");
 let elCardWrapper = findElement(".wrapp");
 let elCategorySelect = document.querySelector(".category-select");
+let sort = document.querySelector('.sort-select')
 const elCardTemplate = document.getElementById("template").content;
 const elBookmarkTemplate = document.getElementById('bookmark-template').content
 let elementImg = document.querySelector(".movie-link");
@@ -11,6 +12,9 @@ let elPreviusbtn = document.querySelector(".previous");
 let elNextbtn = document.querySelector(".next");
 let elPageCount = document.querySelector(".page-count");
 let elBookmarklist = document.querySelector('.bookmark_list')
+let elModalTitle = document.querySelector('.modal_title')
+let elModalSummary = document.querySelector('.modal_text')
+
 
 let limit = 8;
 let page = 1;
@@ -71,7 +75,6 @@ let getMovieGenres = (kinolar) => {
         categories.push(category);
       }
     });
-    //  console.log(categories);
   });
   return categories;
 };
@@ -102,8 +105,8 @@ let renderMovies = (arr) => {
     let routine = templateClone.querySelector(".reyting");
     let star =  templateClone.querySelector(".star");
     let elBookmarkbtn = templateClone.querySelector('.liked')
+    let elModalBtn = templateClone.querySelector('.js-more')
 
-   
     
     title.textContent = movie.title;
     img.src = movie.bigPoster;
@@ -112,6 +115,7 @@ let renderMovies = (arr) => {
     year.textContent ='year : ' +  movie.year ; 
     routine.textContent = movie.imdbRating;
     elBookmarkbtn.dataset.id = movie.imdbId
+    elModalBtn.dataset.id = movie.imdbId
     elementsWrapper.append(templateClone);
    
     elCardWrapper.appendChild(elementsWrapper)
@@ -128,13 +132,14 @@ let handleSearch = (evt) => {
     fitredMovies = KINOLAR;
   } else {
     fitredMovies = KINOLAR.filter((movie) =>
-      movie.categories.includes(category)
-    );
+      movie.categories.includes(category) );
+   
   }
-  console.log(sort.value);
+ 
   fitredMovies = fitredMovies.filter((movie) => movie.title.match(regex));
   fitredMovies.sort(sortFunction[sort.value]);
   renderMovies(fitredMovies);
+  console.log(fitredMovies);
 };
 
 elPageCount.textContent = page;
@@ -171,14 +176,14 @@ let handlePrevpage = () => {
 
 let elBookmarkWrapper = document.createDocumentFragment()
 
-console.log(elBookmarkWrapper);
+
 
 let renderBookmarks = (arr) =>{
   arr.forEach(bookmark =>{
    let bookmarkClone = elBookmarkTemplate.cloneNode(true)
    let title = bookmarkClone.querySelector('.bookmark__title')
    title.textContent = bookmark.title
-    console.log(bookmarkClone, bookmark);
+ 
     elBookmarkWrapper.appendChild(bookmarkClone)
   })
   elBookmarklist.innerHTML = null
@@ -197,6 +202,11 @@ let handleListEvent =(evt) => {
  
     localStorage.setItem('bookmark', JSON.stringify(bookmark))
     renderBookmarks(bookmark)
+  }else if(evt.target.matches('.js-more')){
+   const foundMovies = KINOLAR.find((movie) => movie.imdbId ===evt.target.dataset.id)
+  
+   elModalTitle.textContent = foundMovies.title
+   elModalSummary.textContent = foundMovies.summary
   }
 }
 renderBookmarks(bookmark)

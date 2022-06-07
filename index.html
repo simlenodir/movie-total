@@ -29,22 +29,39 @@
             <button class="btn btn-primary ms-2">Filter</button>
         </form>
         <h2 class="movies__title text-center my-5">THE BEST MOVIES</h2>
-        <p>
-            <a class="btn btn-warning bookmark-box my-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            My  Bookmarks
-            </a>
-          </p>
-          <div class="collapse bookmark-text" id="collapseExample">
-            <div class="card card-body">
-            <ul class="bookmark_list list-unstyled mx-1"> </ul>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h3 class="modal_title"></h3>
+                      <p class="modal_text"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
+        <p>
+            <a class="btn btn-warning bookmark-box my-0" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">
+                My Bookmarks
+            </a>
+        </p>
+        <div class="collapse bookmark-text" id="collapseExample">
+            <div class="card card-body">
+                <ul class="bookmark_list list-unstyled mx-1"> </ul>
+            </div>
+        </div>
         <div class="wrapp d-flex justify-content-around flex-wrap"></div>
 
         <template id="template">
             <div class="card my-2" style="width: 16rem;height: 540px; ">
-                <a href="" class="movie-link"> <img src="" class="card-img-top" alt="..."
-                        style="height: 200px;"></a>
+                <a href="" class="movie-link"> <img src="" class="card-img-top" alt="..." style="height: 200px;"></a>
                 <div class="card-body text-center">
                     <h5 class="card-title"></h5>
                     <p class="card-text"></p>
@@ -53,7 +70,9 @@
                         <p class="reyting mx-2"></p>
                         <img src="./images/star.png" class="star" alt="" height="20" width="30">
                     </div>
-                    <button  class="btn btn-primary pb-2">watch more</button>
+                    <button type="button" class="btn btn-primary js-more" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        watch more info
+                    </button>
                 </div>
                 <button type="button" class="btn btn-warning liked">Bookmark</button>
             </div>

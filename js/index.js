@@ -14,6 +14,7 @@ let elPageCount = document.querySelector(".page-count");
 let elBookmarklist = document.querySelector('.bookmark_list')
 let elModalTitle = document.querySelector('.modal_title')
 let elModalSummary = document.querySelector('.modal_text')
+let elBookMarkList = document.querySelector('.bookmark_list')
 
 
 let limit = 8;
@@ -106,6 +107,7 @@ let renderMovies = (arr) => {
     let star =  templateClone.querySelector(".star");
     let elBookmarkbtn = templateClone.querySelector('.liked')
     let elModalBtn = templateClone.querySelector('.js-more')
+   
 
     
     title.textContent = movie.title;
@@ -139,7 +141,7 @@ let handleSearch = (evt) => {
   fitredMovies = fitredMovies.filter((movie) => movie.title.match(regex));
   fitredMovies.sort(sortFunction[sort.value]);
   renderMovies(fitredMovies);
-  console.log(fitredMovies);
+  // console.log(fitredMovies);
 };
 
 elPageCount.textContent = page;
@@ -181,6 +183,10 @@ let elBookmarkWrapper = document.createDocumentFragment()
 let renderBookmarks = (arr) =>{
   arr.forEach(bookmark =>{
    let bookmarkClone = elBookmarkTemplate.cloneNode(true)
+   let elBookmarkItem = bookmarkClone.querySelector('.bookmark_item')
+   elBookmarkItem.dataset.id = bookmark.imdbId
+  //  console.log(elBookmarkItem.dataset.id);
+  //  console.log(elBookmarkItem);
    let title = bookmarkClone.querySelector('.bookmark__title')
    title.textContent = bookmark.title
  
@@ -196,23 +202,50 @@ let handleListEvent =(evt) => {
     let bookmarkMovie = bookmark.find(bookMark=> bookMark.imdbId ===evt.target.dataset.id)
     if (!bookmarkMovie){
       bookmark.push(foundMovie)
+      // console.log(bookmark,"hhh");
     }
-    console.log(bookmarkMovie);
-
- 
+    
+    
     localStorage.setItem('bookmark', JSON.stringify(bookmark))
     renderBookmarks(bookmark)
+    // console.log(bookmark);
   }else if(evt.target.matches('.js-more')){
-   const foundMovies = KINOLAR.find((movie) => movie.imdbId ===evt.target.dataset.id)
+    const foundMovies = KINOLAR.find((movie) => movie.imdbId ===evt.target.dataset.id)
+    bookmark.dataset.id =  movie.imdbId
+    console.log(bookmark.dataset.id);
   
    elModalTitle.textContent = foundMovies.title
    elModalSummary.textContent = foundMovies.summary
   }
 }
+
+
+let removeBookmark =(evt) => {
+if (evt.target.matches('.remove')){
+  let deleteId = evt.target.closest('li')
+  let ID =  deleteId.dataset.id
+  let DeleteBookMark1 = bookmark.find(e=>e.imdbId == ID)
+  let DeleteBookMark = bookmark.filter(e=>e.imdbId != ID)
+
+  // localStorage.removeItem('',DeleteBookMark1)
+  localStorage.setItem('bookmark', JSON.stringify(DeleteBookMark))
+  renderBookmarks(DeleteBookMark)
+  // console.log(DeleteBookMark);
+// console.log(elBookmarkItem.dataset.id);
+
+}
+}
+// elBookMarkList.addEventListener('click', (e)=>{
+//   e.preventDefault()
+//   console.log(e);
+// })
+
+
 renderBookmarks(bookmark)
 renderMovies(KINOLAR.slice(0, 8));
 elCardWrapper.addEventListener('click', handleListEvent )
 elementForm.addEventListener("submit", handleSearch);
 elNextbtn.addEventListener("click", handleNextpage);
 elPreviusbtn.addEventListener("click", handlePrevpage);
+elBookMarkList.addEventListener('click', removeBookmark)
 // elBookmarkbtn.addEventListener('click',handleBookMark)

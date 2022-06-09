@@ -17,9 +17,10 @@ body {
 }
 
 
-p {
-    height: 30px;
-    overflow: scroll;
+.card-text {
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -43,3 +44,6 @@ h5 {
     font-size: larger;
 }
 
+.modal_text{
+    height: 100px;
+}
